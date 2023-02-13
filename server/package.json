@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.1",
+    "@googleapis/forms": "^2.0.0",
     "youtube-captions-scraper": "^2.0.0"
   }
 }
