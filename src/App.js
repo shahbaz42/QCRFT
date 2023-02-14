@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
@@ -17,6 +17,15 @@ function App() {
       scope: 'https://www.googleapis.com/auth/drive',
       ux_mode: 'popup',
       callback: (response) => {
+        const { code } = response;
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:3001/api/auth/googleAuth');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.onload = () => {
+          console.log(xhr.responseText);
+        };
+        xhr.send('code=' + code);
       },
     });
     client.requestCode();
@@ -25,7 +34,6 @@ function App() {
   return (
     <>
       <div>
-        <h1>QuizCraft</h1>
         { loggedIn &&
           <div>
             <img src={user.picture} alt="user_pic" ></img>
