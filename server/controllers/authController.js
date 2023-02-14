@@ -1,5 +1,6 @@
 const { google } = require('googleapis');
 const User = require('../models/User');
+const jwt = require("jsonwebtoken");
 
 const getProfileInfo = async (access_token) => {
     return new Promise(async (resolve, reject) => {
@@ -25,27 +26,62 @@ exports.requestValidations = (req, res, next) => {
 }
 
 exports.googleAuthController = async (req, res) => {
-    const { code } = req.body;
-    // Super important to use "postmessage" as the redirect_uri
-    // for a popup window. Otherwise, the OAuth2.0 flow will fail.
-    const oauth2Client = new google.auth.OAuth2(
-        process.env.GOOGLE_CLIENT_ID,
-        process.env.GOOGLE_CLIENT_SECRET,
-        "postmessage"
-    );
+    try {
+        const { code } = req.body;
+        // Super important to use "postmessage" as the redirect_uri
+        // for a popup window. Otherwise, the OAuth2.0 flow will fail.
+        const oauth2Client = new google.auth.OAuth2(
+            process.env.GOOGLE_CLIENT_ID,
+            process.env.GOOGLE_CLIENT_SECRET,
+            "postmessage"
+        );
 
-    let { tokens } = await oauth2Client.getToken(code);
-    const profileInfo = await getProfileInfo(tokens.access_token);
-    const dbdta = {
-        name: profileInfo.name,
-        email: profileInfo.email,
-        picture: profileInfo.picture,
-        access_token: tokens.access_token,
-        refresh_token: tokens.refresh_token,
-        scope: tokens.scope,
-        token_type: tokens.token_type,
-        expiry_date: tokens.expiry_date
+        let { tokens } = await oauth2Client.getToken(code);
+        const profileInfo = await getProfileInfo(tokens.access_token);
+        // check if the email is already in the database
+        const email_in_db = await User.findOne({ email: profileInfo.email });
+        if (email_in_db) {
+            // update the user's access token
+            await User.findOneAndUpdate({ email: profileInfo.email }, {
+                access_token: tokens.access_token,
+                refresh_token: tokens.refresh_token,
+                scope: tokens.scope,
+                token_type: tokens.token_type,
+                expiry_date: tokens.expiry_date
+            });
+
+            const token = jwt.sign({ email: profileInfo.email }, process.env.JWT_SECRET, {
+                expiresIn: "30d"
+            });
+            return res.status(200).json({
+                result: "success",
+                token
+            })
+        }
+
+        const newUser = new User({
+            name: profileInfo.name,
+            email: profileInfo.email,
+            picture: profileInfo.picture,
+            access_token: tokens.access_token,
+            refresh_token: tokens.refresh_token,
+            scope: tokens.scope,
+            token_type: tokens.token_type,
+            expiry_date: tokens.expiry_date
+        });
+        await newUser.save();
+
+        const token = jwt.sign({ email: profileInfo.email }, process.env.JWT_SECRET, {
+            expiresIn: "30d"
+        });
+        res.status(200).json({
+            result: "success",
+            token
+        })
+    } catch (err) {
+        res.status(500).json({
+            result: "error",
+            message: err.message
+        })
     }
-    console.log(dbdta);
-    res.send(dbdta);
 }
