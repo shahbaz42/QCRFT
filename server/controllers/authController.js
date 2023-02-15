@@ -2,6 +2,34 @@ import { google } from 'googleapis';
 import User from '../models/User.js';
 import jwt from "jsonwebtoken";
 
+const checkAuth = async(req, res, next) => {
+    try {
+        const token = req.headers.authorization.split(" ")[1];
+        const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+        if (!decoded) {
+            return res.status(401).send("Unauthorized");
+        }
+        const email = decoded.email;
+        const user = await User.findOne({email});
+        if (!user) {
+            return res.status(401).send("Unauthorized");
+        }
+        req.user = user;
+        next();
+    } catch (error) {
+        return res.status(401).send("Unauthorized");
+    }
+}
+
+const getProfileController = (req, res) => {
+    const profileData = {
+        name : req.user.name,
+        email : req.user.email,
+        picture : req.user.picture,
+    }
+    res.status(200).send(profileData);
+}
+    
 const getProfileInfo = async (access_token) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -24,6 +52,7 @@ const requestValidations = (req, res, next) => {
     }
     next();
 }
+
 const googleAuthController = async (req, res) => {
     try {
         const { code } = req.body;
@@ -78,4 +107,4 @@ const googleAuthController = async (req, res) => {
     }
 }
 
-export { requestValidations, googleAuthController }
+export { requestValidations, googleAuthController, checkAuth, getProfileController }
