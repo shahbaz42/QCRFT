@@ -1,4 +1,5 @@
-const fetchSubtitles = require('youtube-captions-scraper').getSubtitles;
+import youtubeCaptionsScraper from 'youtube-captions-scraper';
+const fetchSubtitles = youtubeCaptionsScraper.getSubtitles;
 
 const getSubtitles = async(videoID, {
     lang = 'en',
@@ -21,7 +22,6 @@ const getSubtitles = async(videoID, {
                     captionsText = captionsText.replace(/\[.*?\]/g, '');
                     captionsText = captionsText.trim();
                 }
-                
                 resolve(captionsText);
             }
         } catch (error) {
@@ -46,4 +46,4 @@ const getSubtitles = async(videoID, {
 // }
 // test();
 
-module.exports = getSubtitles;
+export default getSubtitles;
