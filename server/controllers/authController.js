@@ -1,6 +1,6 @@
-const { google } = require('googleapis');
-const User = require('../models/User');
-const jwt = require("jsonwebtoken");
+import { google } from 'googleapis';
+import User from '../models/User.js';
+import jwt from "jsonwebtoken";
 
 const getProfileInfo = async (access_token) => {
     return new Promise(async (resolve, reject) => {
@@ -15,7 +15,7 @@ const getProfileInfo = async (access_token) => {
     })
 }
 
-exports.requestValidations = (req, res, next) => {
+const requestValidations = (req, res, next) => {
     if (req.headers["x-requested-with"] !== "XMLHttpRequest") {
         return res.status(400).send("Invalid Request 1");
     }
@@ -24,8 +24,7 @@ exports.requestValidations = (req, res, next) => {
     }
     next();
 }
-
-exports.googleAuthController = async (req, res) => {
+const googleAuthController = async (req, res) => {
     try {
         const { code } = req.body;
         // Super important to use "postmessage" as the redirect_uri
@@ -78,3 +77,5 @@ exports.googleAuthController = async (req, res) => {
         })
     }
 }
+
+export { requestValidations, googleAuthController }

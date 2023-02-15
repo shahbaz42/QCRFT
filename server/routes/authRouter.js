@@ -1,7 +1,8 @@
-const express = require("express");
-const authController = require("../controllers/authController");
+import express from "express";
+import { requestValidations, googleAuthController } from "../controllers/authController.js";
+
 const Router = express.Router();
 
-Router.post("/googleAuth",authController.requestValidations, authController.googleAuthController);
+Router.post("/googleAuth", requestValidations, googleAuthController);
 
-module.exports = Router;
+export default Router;
