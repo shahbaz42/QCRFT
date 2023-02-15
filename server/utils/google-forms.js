@@ -1,31 +1,88 @@
-'use strict';
+const { google } = require('googleapis');
 
-const path = require('path');
-const google = require('@googleapis/forms');
-const {authenticate} = require('@google-cloud/local-auth');
-
-async function runSample(query) {
-  const authClient = await authenticate({
-    keyfilePath: path.join(__dirname, 'credentials.json'),
-    scopes: 'https://www.googleapis.com/auth/drive',
-  });
-  const forms = google.forms({
-    version: 'v1',
-    auth: authClient,
-  });
-  const newForm = {
-    info: {
-      title: 'Creating a new form in Node',
-    },
-  };
-  const res = await forms.forms.create({
-    requestBody: newForm,
-  });
-  console.log(res.data);
-  return res.data;
+const createNewForm = async({
+  title = "Sample Form",
+  document_title = undefined,
+  tokens
+}) => {
+  return new Promise(async(resolve, reject)=>{
+    try{
+      const oauth2Client = new google.auth.OAuth2(
+        process.env.GOOGLE_CLIENT_ID,
+        process.env.GOOGLE_CLIENT_SECRET,
+        "postmessage"
+      );
+      oauth2Client.setCredentials(tokens);
+      const forms = google.forms({
+        version: 'v1',
+        auth: oauth2Client,
+      });
+      if (document_title === undefined ) { document_title = title }
+      const newForm = {
+        info: {
+          title,
+          document_title,
+        },
+      };
+      const res = await forms.forms.create({
+        requestBody: newForm,
+      });
+      resolve(res.data);
+    } catch(err) {
+      reject(err);
+    }
+  })
 }
 
-if (module === require.main) {
-  runSample().catch(console.error);
+const updateDescription = async({
+  formId,
+  description = "Sample Description",
+  tokens
+}) => {
+  return new Promise(async(resolve, reject) => {
+    try {
+      const oauth2Client = new google.auth.OAuth2(
+        process.env.GOOGLE_CLIENT_ID,
+        process.env.GOOGLE_CLIENT_SECRET,
+        "postmessage"
+      );
+      oauth2Client.setCredentials(tokens);
+      const forms = google.forms({
+        version: 'v1',
+        auth: oauth2Client,
+      });
+      const update = {
+        requests : [
+          {
+            updateFormInfo: {
+              info: {
+                description : description
+              },
+              updateMask: "description"
+            }
+          },
+        ]
+      }
+      const res = await forms.forms.batchUpdate({
+        formId,
+        requestBody: update
+      });
+      console.log(res.data);
+      resolve(res.data)
+    } catch (error) {
+      reject(error)
+    }
+  })
 }
-module.exports = runSample;
+
+// test
+// createNewForm({ title: "Monkey20", document_title: "Hola", tokens});
+// updateDescription({
+//   formId: "1r8FJfDV16peXNz9-CJtynpgrXX2JFe7Pvq9i5_7jgZE",
+//   description: "This is a test",
+//   tokens
+// })
+
+module.exports = {
+  createNewForm
+}
