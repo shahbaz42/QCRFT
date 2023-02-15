@@ -1,5 +1,6 @@
-const { google } = require('googleapis');
-require("dotenv").config();
+import { google } from 'googleapis';
+import dotenv from "dotenv";
+dotenv.config();
 
 const createFormObject = async (tokens) => {
   return new Promise(async (resolve, reject) => {
@@ -97,7 +98,7 @@ const quizData = JSON.parse(`{
   ]
 }`)
 
-const addQuestion = async ({
+const addQuestions = async ({
   formId,
   questions,
   tokens
@@ -231,6 +232,8 @@ const addQuestion = async ({
 //   tokens
 // })
 
-module.exports = {
-  createNewForm
+export {
+  createNewForm,
+  updateDescription,
+  addQuestions
 }
