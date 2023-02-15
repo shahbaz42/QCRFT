@@ -65,7 +65,6 @@ const googleAuthController = async (req, res) => {
         );
 
         let { tokens } = await oauth2Client.getToken(code);
-        console.log(tokens);
         const profileInfo = await getProfileInfo(tokens.access_token);
         // check if the email is already in the database
         const email_in_db = await User.findOne({ email: profileInfo.email });
