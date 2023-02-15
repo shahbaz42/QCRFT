@@ -4,6 +4,7 @@ import morgan from "morgan";
 import cors from "cors";
 import mongoose from "mongoose";
 import authRouter from "./routes/authRouter.js";
+import quizRouter from "./routes/quizRouter.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRouter);
+app.use("/api/quiz", quizRouter);
 
 app.listen(process.env.PORT || 3001, () => {
     console.log("Server is up and running");
