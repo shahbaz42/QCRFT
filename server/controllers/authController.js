@@ -37,17 +37,14 @@ exports.googleAuthController = async (req, res) => {
         );
 
         let { tokens } = await oauth2Client.getToken(code);
+        console.log(tokens);
         const profileInfo = await getProfileInfo(tokens.access_token);
         // check if the email is already in the database
         const email_in_db = await User.findOne({ email: profileInfo.email });
         if (email_in_db) {
-            // update the user's access token
+            // update the tokens
             await User.findOneAndUpdate({ email: profileInfo.email }, {
-                access_token: tokens.access_token,
-                refresh_token: tokens.refresh_token,
-                scope: tokens.scope,
-                token_type: tokens.token_type,
-                expiry_date: tokens.expiry_date
+                tokens : tokens,
             });
 
             const token = jwt.sign({ email: profileInfo.email }, process.env.JWT_SECRET, {
@@ -63,11 +60,7 @@ exports.googleAuthController = async (req, res) => {
             name: profileInfo.name,
             email: profileInfo.email,
             picture: profileInfo.picture,
-            access_token: tokens.access_token,
-            refresh_token: tokens.refresh_token,
-            scope: tokens.scope,
-            token_type: tokens.token_type,
-            expiry_date: tokens.expiry_date
+            tokens : tokens,
         });
         await newUser.save();
 
