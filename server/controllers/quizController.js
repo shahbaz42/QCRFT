@@ -1,6 +1,6 @@
 import getSubtitles from "../utils/youtube-subtitles.js";
 import  { generateQuizJSON } from "../utils/GPT.js";
-import { createNewForm, updateDescription, addQuestions  } from "../utils/google-forms.js";
+import { createNewForm, updateDescription, addQuestions, setQuiz  } from "../utils/google-forms.js";
 
 
 const createQuizController = async (req, res) => {
@@ -27,7 +27,7 @@ const createQuizController = async (req, res) => {
         //     formId: '1a-vo_Zr-M3jGI1XlDLbh0BkSA1h2eTMRcqBvXD1gIiw',
         //     info: { title: 'Sample Form', documentTitle: 'Sample Form' },
         //     revisionId: '00000002',
-        //     responderUri: 'https://docs.google.com/forms/d/e/1FAIpQLSdUVlmrb_qxweJIcQOBLdLwkglsfjTNIjye0EjmOSkIGp3JMg/viewform'
+        //     responderUri: 'https://docs.google.com/forms/d/e/1FAIpQLSdUVlmrb_qxwesfjTNIjye0EjmOSkIGp3JMg/viewform'
         //   }
         const updateDescriptionResult = await updateDescription({
             formId: form.formId,
@@ -35,6 +35,12 @@ const createQuizController = async (req, res) => {
             tokens: req.user.tokens,
         });
         console.log("description updated")
+
+        const setQuizResult = await setQuiz({
+            formId: form.formId,
+            quiz : true,
+            tokens : req.user.tokens,
+        });
 
         const addQuestionsResult = await addQuestions({
             formId: form.formId,
