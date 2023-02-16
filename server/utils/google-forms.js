@@ -71,13 +71,63 @@ const updateDescription = async ({
         formId,
         requestBody: update
       });
-      console.log(res.data);
       resolve(res.data)
     } catch (error) {
       reject(error)
     }
   })
 }
+
+const setQuiz = async({
+  formId,
+  quiz=false,
+  tokens,
+}) => {
+  return new Promise(async(resolve, reject) => {
+    try{
+      const forms = await createFormObject(tokens);
+      const updateRequest = {
+        requests: [
+          {
+            updateSettings: {
+              settings: {
+                quizSettings: {
+                  isQuiz: quiz,
+                },
+              },
+              updateMask: 'quizSettings.isQuiz',
+            },
+          },
+        ],
+      };
+
+      const res = await forms.forms.batchUpdate({
+        formId,
+        requestBody: updateRequest
+      });
+      resolve(res.data);
+    } catch(err){
+      reject(err);
+    }
+  })
+}
+
+// // below code is for testing the above function.
+// const test = async() => {
+//   try {
+//     const result = await setQuiz({
+//       formId : "1r8FJfDV16peXNz9-CJtynpgrXX2JFe7Pvq9i5_7jgZE",
+//       quiz: false,
+//       tokens
+//     })
+//     console.log(result);
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
+
+// test();
+
 
 const quizData = JSON.parse(`{
   "title" : "ChatGPT Quiz",
@@ -101,6 +151,10 @@ const quizData = JSON.parse(`{
 const addQuestions = async ({
   formId,
   questions,
+  score = 1,
+  required = false,
+  textWhenRight = "You got it!",
+  textWhenWrong = "Sorry, that's wrong",
   tokens
 }) => {
 
@@ -112,14 +166,24 @@ const addQuestions = async ({
           item: {
             title: question.question,
             questionItem: {
-              question: {
-                choiceQuestion: {
-                  type: question.type,
-                  options: []
+                question: {
+                    required: true,
+                    grading: {
+                        pointValue: score,
+                        correctAnswers: {
+                            answers: [{"value": question.options[question.answer]}]
+                        },
+                        whenRight: {text: textWhenRight},
+                        whenWrong: {text: textWhenWrong}
+                    },
+                    choiceQuestion: {
+                        type: question.type,
+                        options: [
+                        ]
+                    }
                 }
-              }
             }
-          },
+        },
           location: {
             index: 0
           }
@@ -142,62 +206,6 @@ const addQuestions = async ({
       const forms = await createFormObject(tokens);
       const requests = createRequestArray(questions);
       const update = {
-        // requests: [
-        //   {
-        //     createItem: {
-        //       item : {
-        //         title: "Do you have a keyboard?",
-        //         questionItem: {
-        //           question: {
-        //             choiceQuestion : {
-        //               type: "RADIO", //possibility of error
-        //               options : [
-        //                 {
-        //                   value: "YES",
-        //                   isOther : false
-        //                 },
-        //                 {
-        //                   value: "NO",
-        //                   isOther : false
-        //                 }
-        //               ]
-        //             }
-        //           }
-        //         }
-        //       },
-        //       location: {
-        //         index: 0
-        //       }
-        //     }
-        //   },
-        //   {
-        //     createItem: {
-        //       item : {
-        //         title: "Do you have a mouse?",
-        //         questionItem: {
-        //           question: {
-        //             choiceQuestion : {
-        //               type: "RADIO", //possibility of error
-        //               options : [
-        //                 {
-        //                   value: "YES",
-        //                   isOther : false
-        //                 },
-        //                 {
-        //                   value: "NO",
-        //                   isOther : false
-        //                 }
-        //               ]
-        //             }
-        //           }
-        //         }
-        //       },
-        //       location: {
-        //         index: 0
-        //       }
-        //     }
-        //   }
-        // ]
         requests
       }
       const res = await forms.forms.batchUpdate({
@@ -232,8 +240,11 @@ const addQuestions = async ({
 //   tokens
 // })
 
+
+
 export {
   createNewForm,
   updateDescription,
+  setQuiz,
   addQuestions
 }
