@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useAuth } from '../context/AuthContext'
+import { Link } from 'react-router-dom'
 
 const navigation = [
   // { name: 'Try Now', href: '#' },
@@ -9,7 +11,9 @@ const navigation = [
 ]
 
 export default function Example() {
+  const { startAuthorization, loggedIn, currentUser } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  console.log(loggedIn)
 
   return (
     <div className="isolate bg-white">
@@ -41,9 +45,9 @@ export default function Example() {
       <div className="px-6 pt-6 lg:px-8">
         <nav className="flex items-center justify-between" aria-label="Global">
           <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-                <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">QuizCraft</h1>
+            <a href="/" className="-m-1.5 p-1.5">
+              <span className="sr-only">QuizCraft</span>
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">QuizCraft</h1>
               {/* <img className="h-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" /> */}
             </a>
           </div>
@@ -65,17 +69,32 @@ export default function Example() {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-              Log in <span aria-hidden="true">&rarr;</span>
-            </a>
+            {loggedIn ?
+              <Link to="/craft" className="text-sm font-semibold leading-6 text-gray-900">
+                <div className="flex items-center space-x-4">
+                  <img className="w-10 h-10 rounded-full" src={currentUser.picture} alt="" />
+                  <div className="font-medium">
+                    <div>{currentUser.name}</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">Create Quiz</div>
+                  </div>
+                </div>
+              </Link>
+              :
+              <button onClick={startAuthorization} className="text-sm font-semibold leading-6 text-gray-900">
+                Log in <span aria-hidden="true">&rarr;</span>
+              </button>
+            }
+
+
           </div>
         </nav>
         <Dialog as="div" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
           <Dialog.Panel focus="true" className="fixed inset-0 z-10 overflow-y-auto bg-white px-6 py-6 lg:hidden">
             <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5">
+              <a href="/" className="-m-1.5 p-1.5">
                 <span className="sr-only">QuizCraft</span>
-                <img className="h-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+                <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">QuizCraft</h1>
+                {/* <img className="h-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" /> */}
               </a>
               <button
                 type="button"
@@ -100,12 +119,23 @@ export default function Example() {
                   ))}
                 </div>
                 <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10"
-                  >
-                    Log in
-                  </a>
+                  {loggedIn &&
+                    <a
+                      href="/craft"
+                      className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10"
+                    >
+                      Create a Quiz
+                    </a>
+                  }
+                  {
+                    !loggedIn &&
+                    <a
+                      href="/monkey"
+                      className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10"
+                    >
+                      Log in
+                    </a>
+                  }
                 </div>
               </div>
             </div>
@@ -129,16 +159,30 @@ export default function Example() {
                 Generate Quizzes from YouTube Videos with QuizCraft.
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-              With just a few clicks, QuizCraft generates a Google Form quiz that can be shared with students or viewers, helping them to test their knowledge and retain information more effectively.
+                With just a few clicks, QuizCraft generates a Google Form quiz that can be shared with students or viewers, helping them to test their knowledge and retain information more effectively.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <a
-                  href="#"
-                  className="rounded-md bg-indigo-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Get started
-                </a>
-                <a href="#" className="text-base font-semibold leading-7 text-gray-900">
+                {
+                  !loggedIn &&
+                  <button
+                    onClick={startAuthorization}
+                    className="rounded-md bg-indigo-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Log in
+                  </button>
+                }
+                {
+                  loggedIn &&
+                  <Link to="/craft">
+                    <button
+                      className="rounded-md bg-green-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      Create Quiz
+                    </button>
+                  </Link>
+                }
+
+                <a href="/" className="text-base font-semibold leading-7 text-gray-900">
                   Learn more <span aria-hidden="true">→</span>
                 </a>
               </div>
