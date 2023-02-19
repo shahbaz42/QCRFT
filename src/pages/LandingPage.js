@@ -10,7 +10,8 @@ const navigation = [
   // { name: 'About', href: '#' },
 ]
 
-export default function Example() {
+export default function LandingPage() {
+  console.log('Landing Page')
   const { startAuthorization, loggedIn, currentUser } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   console.log(loggedIn)

@@ -11,7 +11,7 @@ export default function CraftForm() {
         backgroundRepeat: "repeat",
         backgroundPosition: "center",
         backgroundColor: "#d7f0f5",
-        backgroundImage: "linear-gradient(to bottom, transparent, transparent 20%, #fff 20%, #fff 90%, transparent 90%), linear-gradient(to right, transparent, transparent 20%, #fff 20%, #fff 90%, transparent 90%), linear-gradient(to right, #eee, #eee 20%, #fff 20%, #fff 90%, #eee 90%)",
+        backgroundImage: "linear-gradient(rgba(174,144,245, 0.0), rgba(174,144,245, 0.0)), linear-gradient(to bottom, transparent, transparent 20%, #fff 20%, #fff 90%, transparent 90%), linear-gradient(to right, transparent, transparent 20%, #fff 20%, #fff 90%, transparent 90%), linear-gradient(to right, #eee, #eee 20%, #fff 20%, #fff 90%, #eee 90%)",
         backgroundSize: "10px 10px",
         overflowY: "scroll",
         }}>
