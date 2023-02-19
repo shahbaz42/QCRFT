@@ -2,6 +2,27 @@ import getSubtitles from "../utils/youtube-subtitles.js";
 import  { generateQuizJSON } from "../utils/GPT.js";
 import { createNewForm, updateDescription, addQuestions, setQuiz  } from "../utils/google-forms.js";
 
+const getSubtitleController = async (req, res) => {
+    try {
+        const { url } = req.query;
+        const youtube_video_id = url.split("v=")[1];
+        const subtitles = await getSubtitles(youtube_video_id, {
+            timestamps: false,
+            removeFormatting: true,
+        });
+        console.log(subtitles);
+        res.status(200).json({
+            result: "success",
+            subtitles
+        });
+    } catch (error) {
+        res.status(500).json({
+            result: "error",
+            message: error.message
+        })
+    }
+}
+
 
 const createQuizController = async (req, res) => {
     try {
@@ -61,4 +82,4 @@ const createQuizController = async (req, res) => {
     }
 }
 
-export { createQuizController }
+export { getSubtitleController, createQuizController }
