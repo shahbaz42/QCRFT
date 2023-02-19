@@ -33,6 +33,7 @@ export function AuthProvider({ children }) {
                 setLoggedIn(false);
             });
         }
+        setLoading(false);
     }, [token]);
 
     function startAuthorization() {
