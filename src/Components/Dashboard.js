@@ -1,7 +1,8 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Draggable, { DraggableCore } from 'react-draggable'
+import SplitPane, { Pane } from 'react-split-pane'
 import CardWithHeader from './CardWithHeader'
 import DividerWithButton from './DividerWithButton'
 import CreateNewQuiz from './CreateNewQuiz'
@@ -30,6 +31,7 @@ function classNames(...classes) {
 }
 
 export default function Dashboard() {
+    const nodeRef = useRef(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [quizData, setQuizData] = useState({
@@ -55,19 +57,19 @@ export default function Dashboard() {
         // depending on num call the api and add questions.
         // generate qArr
         const qArr = [
-                {
-                    "question": "What is the name of OpenAI's language model?",
-                    "type": "RADIO",
-                    "options": ["Bert", "ChatGPT", "GPT-1", "GPT-3"],
-                    "answer": 1
-                },
-                {
-                    "question": "Which company recently invested 10 billion dollars in OpenAI?",
-                    "type": "RADIO",
-                    "options": ["Google", "Microsoft", "Amazon", "Apple"],
-                    "answer": 1
-                },
-            ]
+            {
+                "question": "What is the name of OpenAI's language model?",
+                "type": "RADIO",
+                "options": ["Bert", "ChatGPT", "GPT-1", "GPT-3"],
+                "answer": 1
+            },
+            {
+                "question": "Which company recently invested 10 billion dollars in OpenAI?",
+                "type": "RADIO",
+                "options": ["Google", "Microsoft", "Amazon", "Apple"],
+                "answer": 1
+            },
+        ]
 
         setQuizData({
             ...quizData,
@@ -76,7 +78,7 @@ export default function Dashboard() {
     }
 
     useEffect(() => {
-        
+
     }, []);
 
 
@@ -185,7 +187,7 @@ export default function Dashboard() {
                 {/* Static sidebar for desktop */}
                 <div className="hidden md:flex md:w-72 md:flex-col md:fixed md:inset-y-0" style={{ position: "fixed", height: "100vh", zIndex: 2 }}>
                     {/* Sidebar component, swap this element with another sidebar if you like */}
-                    <div className="flex-1 flex flex-col min-h-0 border-r drop-shadow-2xl border-white bg-white">
+                    <div className="flex-1 flex flex-col min-h-0 border-r drop-shadow-xl hover:drop-shadow-2xl border-white bg-white">
                         <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                             <div className="flex items-center flex-shrink-0 px-4">
                                 <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">QuizCraft</h1>
@@ -254,17 +256,12 @@ export default function Dashboard() {
                             </div>
                             <div className="max-w-2xl mx-auto px-4 sm:px-6 md:px-8">
                                 {/* Replace with your content */}
-                                <Draggable>
-                                
-                                    <div className="py-4" style={{ position: "relative", zIndex: 1 }}>
-                                        {
-                                            quizData.questions.length === 0 &&
-                                            <CreateNewQuiz />
-                                        }
+                                <Draggable nodeRef={nodeRef}>
+                                    <div ref={nodeRef} className="py-4" style={{ position: "relative", zIndex: 1 }}>
                                         {
                                             quizData.questions.map((question, index) => {
                                                 return (
-                                                    <CardWithHeader key={index} qn={index+1} header={question.question} options={question.options} answer={question.answer} />
+                                                    <CardWithHeader key={index} qn={index + 1} header={question.question} options={question.options} answer={question.answer} />
                                                 )
                                             })
                                         }
@@ -272,14 +269,40 @@ export default function Dashboard() {
                                         <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
                                     </div>
                                 </Draggable>
-
-                                {/* /End replace */}
+                                <div className='fixed right-0 top-0 h-screen bg-white' style={{zIndex: 2}}>
+                                <CreateNewQuizSidebar />    
+                                {/* <SplitPane
+                                        split="vertical"
+                                        minSize={"10%"}
+                                        maxSize={"50%"}
+                                        defaultSize={"50%"}
+                                        allowResize={true}
+                                    >
+                                        <div />
+                                        <CreateNewQuizSidebar />
+                                </SplitPane> */}
+                                </div>
+                                    
+                                
                             </div>
                         </div>
                     </main>
                 </div>
             </div>
         </>
+    )
+}
+
+const CreateNewQuizSidebar = (props) => {
+    const [expanded, setExpanded] = useState(true);
+
+    return (
+        <div className="right-8 h-screen top-0 min-w-1/3" style={{ "zIndex": 2 }} >
+            <div>
+
+            </div>
+            <CreateNewQuiz />
+        </div>
     )
 }
 
