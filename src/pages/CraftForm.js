@@ -1,17 +1,44 @@
-import React, {useState, useRef} from 'react';
-import axios from 'axios';
-import { useAuth } from '../context/AuthContext'
+import React from 'react'
+import Dashboard from '../Components/Dashboard'
+
 
 export default function CraftForm() {
-    const {loggedIn, currentUser, logout} = useAuth();
+  return (
+    
+    <div className='' style={{
+        height: "100vh", 
+        width:"100vw",
+        backgroundRepeat: "repeat",
+        backgroundPosition: "center",
+        backgroundColor: "#d7f0f5",
+        backgroundImage: "linear-gradient(to bottom, transparent, transparent 20%, #fff 20%, #fff 90%, transparent 90%), linear-gradient(to right, transparent, transparent 20%, #fff 20%, #fff 90%, transparent 90%), linear-gradient(to right, #eee, #eee 20%, #fff 20%, #fff 90%, #eee 90%)",
+        backgroundSize: "10px 10px",
+        overflowY: "scroll",
+        }}>
+        <Dashboard />
+        
+    </div>
+  )
+}
 
-    return (
-        <>
-            <h1>Craft Form</h1>
-            <button onClick={logout}>Logout </button>
-            {loggedIn ? <p>Logged in as {currentUser.email}</p> : <p>Not logged in</p>}
-        </>
-    )
+
+
+
+
+// import React, {useState, useRef} from 'react';
+// import axios from 'axios';
+// import { useAuth } from '../context/AuthContext'
+
+// export default function CraftForm() {
+//     const {loggedIn, currentUser, logout} = useAuth();
+
+//     return (
+//         <>
+//             <h1>Craft Form</h1>
+//             <button onClick={logout}>Logout </button>
+//             {loggedIn ? <p>Logged in as {currentUser.email}</p> : <p>Not logged in</p>}
+//         </>
+//     )
 
     // const [user, setUser] = useState({});
     // const [loggedIn, setLoggedIn] = useState(false);
@@ -112,4 +139,4 @@ export default function CraftForm() {
     //         </div>
     //     </>
     // );
-}
+// }
