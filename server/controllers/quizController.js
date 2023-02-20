@@ -82,4 +82,28 @@ const createQuizController = async (req, res) => {
     }
 }
 
-export { getSubtitleController, createQuizController }
+const createQuizFromTextController = async (req, res) => {
+    try {
+        const { text, num } = req.body;
+
+        const quizJSON = await generateQuizJSON({
+            text,
+            noOfQuestions : Number(num),
+        });
+        console.log("quizJSON created");
+        res.status(200).json({
+            success: true,
+            quizJSON
+        });
+
+    } catch (err) {
+        console.log("err----------------------------");
+        console.log(err);
+        res.status(500).json({
+            result: "error",
+            message: err.message
+        })
+    }
+}
+
+export { getSubtitleController, createQuizController, createQuizFromTextController }
