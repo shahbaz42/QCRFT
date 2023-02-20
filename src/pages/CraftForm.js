@@ -16,7 +16,6 @@ export default function CraftForm() {
         overflowY: "scroll",
         }}>
         <Dashboard />
-        
     </div>
   )
 }

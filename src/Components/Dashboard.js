@@ -5,6 +5,7 @@ import Draggable from 'react-draggable'
 import CardWithHeader from './CardWithHeader'
 import DividerWithButton from './DividerWithButton'
 import CreateNewQuiz from './CreateNewQuiz'
+import CreateGoogleFormButton from './CreateGoogleFormButton';
 import { useApp } from '../context/AppContext'
 import axios from 'axios';
 import {
@@ -76,7 +77,7 @@ export default function Dashboard() {
     //     // push the questions to the quizData question array.
     //     setQuizData( { ...quizData, questions: [...quizData.questions, ...result.data.questions] });
     //     console.log({quizData});
-    
+
     // }
 
     useEffect(() => {
@@ -268,12 +269,14 @@ export default function Dashboard() {
                                             })
                                         }
                                         <DividerWithButton addQn={addQuestions} />
-                                        <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
+                                        <CreateGoogleFormButton />
+                                        
                                     </div>
                                 </Draggable>
-                                <div className='fixed right-0 top-0 h-screen bg-white' style={{zIndex: 2}}>
-                                <CreateNewQuizSidebar />    
-                                {/* <SplitPane
+                                <div className='fixed right-0 top-0 h-screen bg-white' style={{ zIndex: 2 }}>
+
+                                    <CreateNewQuizSidebar />
+                                    {/* <SplitPane
                                         split="vertical"
                                         minSize={"10%"}
                                         maxSize={"50%"}
@@ -284,8 +287,8 @@ export default function Dashboard() {
                                         <CreateNewQuizSidebar />
                                 </SplitPane> */}
                                 </div>
-                                    
-                                
+
+
                             </div>
                         </div>
                     </main>
