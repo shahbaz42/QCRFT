@@ -12,6 +12,7 @@ export function AppProvider({ children }) {
     const { token } = useAuth();
     const [ subtitles, setSubtitles ] = useState("");
     const [ youtubeLink, setYoutubelink ] = useState("");
+    const [ formLink, setFormLink ] = useState("");
     const [ quizData, setQuizData ] = useState({
         "title": "Create a Quiz",
         "description": "Please Create a Quiz",
@@ -54,6 +55,28 @@ export function AppProvider({ children }) {
     
     }
 
+    const createGoogleForm = async () => {
+        // to implement warning when subtitle is not present.
+        // depending on num call the api and add questions.
+        // generate qArr
+        // todo error handling
+
+        const URL = `${process.env.REACT_APP_SERVER_URL}/api/quiz/createGoogleFormFromQuizJSON`;
+        const headers = {
+            Authorization: `Bearer ${token}`
+        }
+        const data = {
+            quizJSON: quizData,
+        }
+        const result = await axios.post(URL, data, { headers });
+        console.log(result.data);
+        setFormLink(result.data.formLink);
+        // push the questions to the quizData question array.
+        // setQuizData( { ...quizData, questions: [...quizData.questions, ...result.data.quizJSON.questions] });
+        // console.log({quizData});
+    }
+    
+
     const value = {
         subtitles,
         setSubtitles,
@@ -62,6 +85,8 @@ export function AppProvider({ children }) {
         quizData,
         setQuizData,
         addQuestions,
+        formLink,
+        createGoogleForm
     }
 
     return (
