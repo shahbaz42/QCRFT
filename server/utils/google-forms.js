@@ -223,8 +223,6 @@ const addQuestions = async ({
 }
 
 
-
-
 // test
 // createNewForm({ title: "Monkey42", document_title: "My Monkey Form", tokens});
 // updateDescription({
@@ -239,8 +237,6 @@ const addQuestions = async ({
 //   questions : quizData.questions,
 //   tokens
 // })
-
-
 
 export {
   createNewForm,

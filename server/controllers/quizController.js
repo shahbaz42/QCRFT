@@ -106,4 +106,60 @@ const createQuizFromTextController = async (req, res) => {
     }
 }
 
-export { getSubtitleController, createQuizController, createQuizFromTextController }
+const createGoogleFormFromQuizJSONController = async (req, res) => {
+    try {
+        const { quizJSON } = req.body;
+        const form = await createNewForm({
+            title: "Sample Form",
+            document_title: undefined,
+            tokens: req.user.tokens,
+        });
+        console.log("form created");
+        // {
+        //     formId: '1a-vo_Zr-M3jGI1XlDLbh0BkSA1h2eTMRcqBvXD1gIiw',
+        //     info: { title: 'Sample Form', documentTitle: 'Sample Form' },
+        //     revisionId: '00000002',
+        //     responderUri: 'https://docs.google.com/forms/d/e/1FAIpQLSdUVlmrb_qxwesfjTNIjye0EjmOSkIGp3JMg/viewform'
+        //   }
+        const updateDescriptionResult = await updateDescription({
+            formId: form.formId,
+            description: quizJSON.description,
+            tokens: req.user.tokens,
+        });
+        console.log("description updated");
+
+        const setQuizResult = await setQuiz({
+            formId: form.formId,
+            quiz : true,
+            tokens : req.user.tokens,
+        });
+
+        const addQuestionsResult = await addQuestions({
+            formId: form.formId,
+            questions: quizJSON.questions,
+            tokens: req.user.tokens,
+        });
+        console.log("questions added")
+
+        res.status(200).json({
+            success: true,
+            formLink : form.responderUri
+        })
+
+    } catch (err) {
+        console.log("err----------------------------");
+        console.log(err);
+        res.status(500).json({
+            result: "error",
+            message: err.message
+        })
+    }
+}
+
+
+export { 
+    getSubtitleController, 
+    createQuizController, 
+    createQuizFromTextController,
+    createGoogleFormFromQuizJSONController
+}
