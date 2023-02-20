@@ -50,6 +50,19 @@
   @apply focus:ring-offset-2 focus:ring-2 focus:border-indigo-500 focus:ring-indigo-500;
 }
 
+/* Dashed big button */
+.dashed-big-button-indigo {
+  @apply border-gray-300 text-lg font-semibold p-3 border-dashed border-2 h-14 rounded-full ring-black;
+}
+
+.dashed-big-button-indigo:hover {
+  @apply hover:border-indigo-500 hover:ring-indigo-500 hover:ring-offset-2 hover:ring-2;
+}
+
+.dashed-big-button-indigo:focus{
+  @apply focus:ring-offset-2 focus:ring-2 focus:border-indigo-500 focus:ring-indigo-500;
+}
+
 /* dashed input indigo */
 .dashed-input-indigo{
   @apply shadow-sm inline-block w-full h-14 border-2 border-gray-300 border-dashed sm:text-sm px-4 rounded-xl;
