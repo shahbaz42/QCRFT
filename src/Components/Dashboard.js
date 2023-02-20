@@ -1,11 +1,12 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useEffect, useState, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import Draggable, { DraggableCore } from 'react-draggable'
-import SplitPane, { Pane } from 'react-split-pane'
+import Draggable from 'react-draggable'
 import CardWithHeader from './CardWithHeader'
 import DividerWithButton from './DividerWithButton'
 import CreateNewQuiz from './CreateNewQuiz'
+import { useApp } from '../context/AppContext'
+import axios from 'axios';
 import {
     CalendarIcon,
     ChartBarIcon,
@@ -31,51 +32,52 @@ function classNames(...classes) {
 }
 
 export default function Dashboard() {
+    const { quizData, setQuizData, addQuestions } = useApp();
     const nodeRef = useRef(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    // const [addQuestions] = useApp();
     const [loading, setLoading] = useState(false);
-    const [quizData, setQuizData] = useState({
-        "title": "Create a Quiz",
-        "description": "Please Create a Quiz",
-        "questions": [
-            // {
-            //     "question": "What is the name of OpenAI's language model?",
-            //     "type": "RADIO",
-            //     "options": ["Bert", "ChatGPT", "GPT-1", "GPT-3"],
-            //     "answer": 1
-            // },
-            // {
-            //     "question": "Which company recently invested 10 billion dollars in OpenAI?",
-            //     "type": "RADIO",
-            //     "options": ["Google", "Microsoft", "Amazon", "Apple"],
-            //     "answer": 1
-            // }
-        ]
-    });
 
-    const addQuestions = (num) => {
-        // depending on num call the api and add questions.
-        // generate qArr
-        const qArr = [
-            {
-                "question": "What is the name of OpenAI's language model?",
-                "type": "RADIO",
-                "options": ["Bert", "ChatGPT", "GPT-1", "GPT-3"],
-                "answer": 1
-            },
-            {
-                "question": "Which company recently invested 10 billion dollars in OpenAI?",
-                "type": "RADIO",
-                "options": ["Google", "Microsoft", "Amazon", "Apple"],
-                "answer": 1
-            },
-        ]
+    // const [ quizData, setQuizData ] = useState({
+    //     "title": "Create a Quiz",
+    //     "description": "Please Create a Quiz",
+    //     "questions": [
+    //         // {
+    //         //     "question": "What is the name of OpenAI's language model?",
+    //         //     "type": "RADIO",
+    //         //     "options": ["Bert", "ChatGPT", "GPT-1", "GPT-3"],
+    //         //     "answer": 1
+    //         // },
+    //         // {
+    //         //     "question": "Which company recently invested 10 billion dollars in OpenAI?",
+    //         //     "type": "RADIO",
+    //         //     "options": ["Google", "Microsoft", "Amazon", "Apple"],
+    //         //     "answer": 1
+    //         // }
+    //     ]
+    // });
 
-        setQuizData({
-            ...quizData,
-            questions: [...quizData.questions, ...qArr]
-        })
-    }
+    // const addQuestions = async (num) => {
+    //     // to implement warning when subtitle is not present.
+    //     // depending on num call the api and add questions.
+    //     // generate qArr
+    //     // todo error handling
+
+    //     const URL = `${process.env.REACT_APP_SERVER_URL}/api/quiz/createQuizFromText`;
+    //     const headers = {
+    //         Authorization: `Bearer ${"token"}`
+    //     }
+    //     const data = {
+    //         text: "subtitles",
+    //         num: num
+    //     }
+    //     const result = await axios.post(URL, data, { headers });
+    //     console.log(result.data);
+    //     // push the questions to the quizData question array.
+    //     setQuizData( { ...quizData, questions: [...quizData.questions, ...result.data.questions] });
+    //     console.log({quizData});
+    
+    // }
 
     useEffect(() => {
 

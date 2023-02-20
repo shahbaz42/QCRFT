@@ -1,16 +1,15 @@
 import { useState, useRef } from 'react'
-import PillShapedInput from './PillShapedInput'
-import SplitPane from 'react-split-pane'
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext'
+import { useApp } from '../context/AppContext'
 
 const CreateNewQuizBox = () => {
     const urlRef = useRef(null);
-    const [subtitle, setSubtitle] = useState("");
     const {token} = useAuth();
+    const { subtitles, setSubtitles } = useApp();
 
     const textAreaHandler = (e) => {
-        setSubtitle(e.target.value);
+        setSubtitles(e.target.value);
     }
 
     const fetchSubtitle = async() => {
@@ -30,7 +29,7 @@ const CreateNewQuizBox = () => {
 
         
         console.log(response.data);
-        setSubtitle(response.data.subtitles);
+        setSubtitles(response.data.subtitles);
     }
 
 
@@ -47,9 +46,8 @@ const CreateNewQuizBox = () => {
                         </div>
                     </div>
                     <div className="mt-3">
-                        <textarea className="dashed-textarea-indigo hideScroll" value={subtitle} onChange={textAreaHandler} style={{ resize: "both", direction: "rtl", textAlign: "left" }} />
+                        <textarea className="dashed-textarea-indigo hideScroll" value={subtitles} onChange={textAreaHandler} style={{ resize: "both", direction: "rtl", textAlign: "left" }} />
                     </div>
-                    
                 </div>
             </div>
         </div>
