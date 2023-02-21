@@ -39,20 +39,20 @@
 
 /* Dashed button */
 .dashed-button-indigo {
-  @apply border-gray-300 border-dashed border-2 h-14 rounded-full w-20 ring-black;
+  @apply font-semibold text-gray-400 border-gray-400 border-dashed border-2 h-11 rounded-full w-full ring-black;
 }
 
 .dashed-button-indigo:hover {
-  @apply hover:border-gray-400; 
+  @apply hover:border-red-700 text-red-700 ; 
 }
 
 .dashed-button-indigo:focus{
-  @apply focus:ring-offset-2 focus:ring-2 focus:border-indigo-500 focus:ring-indigo-500;
+  @apply focus:ring-offset-2 focus:ring-2 focus:border-red-700 focus:ring-red-700 text-red-700 ;
 }
 
 /* Dashed big button */
 .dashed-big-button-indigo {
-  @apply border-gray-300 text-lg font-semibold p-3 border-dashed border-2 h-14 rounded-full ring-black;
+  @apply border-gray-400 text-lg font-semibold p-3 border-dashed border-2 h-14 rounded-full ring-black;
 }
 
 .dashed-big-button-indigo:hover {
@@ -65,11 +65,11 @@
 
 /* dashed input indigo */
 .dashed-input-indigo{
-  @apply shadow-sm inline-block w-full h-14 border-2 border-gray-300 border-dashed sm:text-sm px-4 rounded-xl;
+  @apply shadow-sm inline-block w-full h-11 border-2 border-gray-400 border-dashed sm:text-sm px-4 rounded-xl;
 }
 
 .dashed-input-indigo:hover{
-  @apply hover:border-gray-400 ;
+  @apply hover:border-gray-800 ;
 }
 
 .dashed-input-indigo:focus{
@@ -78,11 +78,11 @@
 
 /* dashed textarea indigo  */
 .dashed-textarea-indigo{
-  @apply shadow-sm inline-block w-full h-36 border-2 border-gray-300 border-dashed sm:text-sm px-4 rounded-xl;
+  @apply shadow-sm inline-block w-full h-36 p-5 border-2 border-gray-400 border-dashed sm:text-sm px-4 rounded-xl;
 }
 
 .dashed-textarea-indigo:hover{
-  @apply hover:border-gray-400 ;
+  @apply hover:border-gray-800 ;
 }
 
 .dashed-textarea-indigo:focus{

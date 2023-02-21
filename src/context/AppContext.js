@@ -9,6 +9,7 @@ export function useApp() {
 }
 
 export function AppProvider({ children }) {
+    // to do : use localstorage for persistence.
     const { token } = useAuth();
     const [ subtitles, setSubtitles ] = useState("");
     const [ youtubeLink, setYoutubelink ] = useState("");
@@ -16,20 +17,7 @@ export function AppProvider({ children }) {
     const [ quizData, setQuizData ] = useState({
         "title": "Create a Quiz",
         "description": "Please Create a Quiz",
-        "questions": [
-            // {
-            //     "question": "What is the name of OpenAI's language model?",
-            //     "type": "RADIO",
-            //     "options": ["Bert", "ChatGPT", "GPT-1", "GPT-3"],
-            //     "answer": 1
-            // },
-            // {
-            //     "question": "Which company recently invested 10 billion dollars in OpenAI?",
-            //     "type": "RADIO",
-            //     "options": ["Google", "Microsoft", "Amazon", "Apple"],
-            //     "answer": 1
-            // }
-        ]
+        "questions": []
     });
 
 
