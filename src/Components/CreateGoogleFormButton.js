@@ -20,9 +20,9 @@ export default function CreateGoogleFormButton() {
                             createGoogleForm();
                         }}
                         type="button"
-                        className={`relative block w-full border-2 rounded-full border-dashed p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 ${formLink.length > 0
-                                ? 'border-gray-500'
-                                : 'border-gray-500'
+                        className={`relative block w-full border-2 rounded-full border-dashed p-12 text-center hover:border-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 ${formLink.length > 0
+                                ? 'border-gray-400'
+                                : 'border-gray-400'
                             }`}
                     >
                         {
