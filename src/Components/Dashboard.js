@@ -7,15 +7,12 @@ import DividerWithButton from './DividerWithButton'
 import CreateNewQuiz from './CreateNewQuiz'
 import CreateGoogleFormButton from './CreateGoogleFormButton';
 import { useApp } from '../context/AppContext'
-import axios from 'axios';
+import { useAuth } from '../context/AuthContext'
 import {
-    CalendarIcon,
     ChartBarIcon,
     FolderIcon,
-    HomeIcon,
     InboxIcon,
     Bars3Icon,
-    UsersIcon,
     XMarkIcon,
     AdjustmentsHorizontalIcon,
     DocumentPlusIcon,
@@ -35,9 +32,9 @@ function classNames(...classes) {
 
 export default function Dashboard() {
     const { quizData, setQuizData, addQuestions } = useApp();
+    const { currentUser, logout } = useAuth();
     const nodeRef = useRef(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    // const [addQuestions] = useApp();
     const [loading, setLoading] = useState(false);
 
     // const [ quizData, setQuizData ] = useState({
@@ -135,11 +132,6 @@ export default function Dashboard() {
                                 <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
                                     <div className="flex-shrink-0 flex items-center px-4">
                                         <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">QuizCraft</h1>
-                                        {/* <img
-                      className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-                      alt="Workflow"
-                    /> */}
                                     </div>
                                     <nav className="mt-5 px-2 space-y-1">
                                         {navigation.map((item) => (
@@ -166,21 +158,19 @@ export default function Dashboard() {
                                     </nav>
                                 </div>
                                 <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-                                    <a href="#" className="flex-shrink-0 group block">
                                         <div className="flex items-center">
-                                            {/* <div>
-                        <img
-                          className="inline-block h-10 w-10 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt=""
-                        />
-                      </div>
-                      <div className="ml-3">
-                        <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">Tom Cook</p>
-                        <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">View profile</p>
-                      </div> */}
+                                            <div>
+                                                <img
+                                                    className="inline-block h-10 w-10 rounded-full"
+                                                    src={currentUser.picture}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div className="ml-3">
+                                                <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">{currentUser.name}</p>
+                                                <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700 hover:cursor hover:underline" onClick={logout}>Logout</p>
+                                            </div>
                                         </div>
-                                    </a>
                                 </div>
                             </div>
                         </Transition.Child>
@@ -195,11 +185,6 @@ export default function Dashboard() {
                         <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                             <div className="flex items-center flex-shrink-0 px-4">
                                 <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">QuizCraft</h1>
-                                {/* <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-                  alt="Workflow"
-                /> */}
                             </div>
                             <nav className="mt-5 flex-1 px-2 bg-white space-y-1">
                                 {navigation.map((item) => (
@@ -224,21 +209,19 @@ export default function Dashboard() {
                             </nav>
                         </div>
                         <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-                            <a href="#" className="flex-shrink-0 w-full group block">
-                                <div className="flex items-center">
-                                    {/* <div>
-                    <img
-                      className="inline-block h-9 w-9 rounded-full"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
-                    />
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">Tom Cook</p>
-                    <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">View profile</p>
-                  </div> */}
+                            <div className="flex items-center">
+                                <div>
+                                    <img
+                                        className="inline-block h-9 w-9 rounded-full"
+                                        src={currentUser.picture}
+                                        alt=""
+                                    />
                                 </div>
-                            </a>
+                                <div className="ml-3">
+                                    <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">{currentUser.name}</p>
+                                    <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700 hover:cursor-pointer hover:underline" onClick={logout}>Logout</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -259,7 +242,6 @@ export default function Dashboard() {
                                 <h1 className="text-md absolute top-0 p-2 drop-shadow-md rounded-br-2xl rounded-bl-2xl bg-white font-semibold text-gray-600">{quizData.title}</h1>
                             </div>
                             <div className="max-w-2xl mx-auto px-4 sm:px-6 md:px-8">
-                                {/* Replace with your content */}
                                 <Draggable nodeRef={nodeRef}>
                                     <div ref={nodeRef} className="py-4" style={{ position: "relative", zIndex: 1 }}>
                                         {
@@ -271,7 +253,7 @@ export default function Dashboard() {
                                         }
                                         <DividerWithButton addQn={addQuestions} />
                                         <CreateGoogleFormButton />
-                                        
+
                                     </div>
                                 </Draggable>
                                 <div className='fixed right-0 top-0 h-screen bg-white' style={{ zIndex: 2 }}>
