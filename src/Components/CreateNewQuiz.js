@@ -38,10 +38,10 @@ const CreateNewQuizBox = () => {
             <div className='relative bg-white block w-full  border-gray-300 border-dashed rounded-lg p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
                 <div>
                     <div className="mt-1">
-                        <div className='inline-block w-1/2'>
+                        <div className='inline-block w-2/3'>
                             <input ref={urlRef} className="dashed-input-indigo" type="text" name="name" id="name" placeholder="Youtube Link" />
                         </div>
-                        <div className='inline-block mx-3'>
+                        <div className='inline-block' style={{width: "28%", marginLeft:"5.2%" }}>
                             <button onClick={(e)=>{fetchSubtitle(e)}} className="dashed-button-indigo"> Fetch </button>
                         </div>
                     </div>
