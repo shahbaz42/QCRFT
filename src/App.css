@@ -37,6 +37,15 @@
   }
 }
 
+/* Media query for right-sidebar */
+@media (max-width: 768px) {
+  .right-sidebar {
+    width: calc(100vw - 46px);
+    max-width: calc(100vw - 46px);
+  }
+}
+
+
 /* Dashed button */
 .dashed-button-indigo {
   @apply font-semibold text-gray-400 border-gray-400 border-dashed border-2 h-11 rounded-full w-full ring-black;
