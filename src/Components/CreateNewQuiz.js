@@ -1,18 +1,37 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext'
 import { useApp } from '../context/AppContext'
+import { MicrophoneIcon } from '@heroicons/react/24/outline'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 const CreateNewQuizBox = () => {
     const urlRef = useRef(null);
-    const {token} = useAuth();
+    const { token } = useAuth();
     const { subtitles, setSubtitles } = useApp();
+    
+    const {
+        transcript,
+        setTranscript,
+        listening,
+        resetTranscript,
+        browserSupportsSpeechRecognition
+    } = useSpeechRecognition();
+
+    const startListening = () => {
+        SpeechRecognition.startListening({continuous : true})
+    }
 
     const textAreaHandler = (e) => {
         setSubtitles(e.target.value);
+        setTranscript(e.target.value);
     }
 
-    const fetchSubtitle = async() => {
+    useEffect(() => {
+        setSubtitles(transcript);
+    }, [transcript])
+
+    const fetchSubtitle = async () => {
         console.log("fetching subtitle");
         const url = urlRef.current.value;
 
@@ -23,11 +42,9 @@ const CreateNewQuizBox = () => {
         const headers = {
             Authorization: `Bearer ${token}`
         }
-        
-        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/quiz/getSubtitle`, {params, headers});
 
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/quiz/getSubtitle`, { params, headers });
 
-        
         console.log(response.data);
         setSubtitles(response.data.subtitles);
     }
@@ -38,11 +55,16 @@ const CreateNewQuizBox = () => {
             <div className='relative bg-white block w-full  border-gray-300 border-dashed rounded-lg p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
                 <div>
                     <div className="mt-1">
-                        <div className='inline-block w-2/3'>
+                        <div className='inline-block' style={{ width: "calc(100% - 85px - 45px - 40px )" }}>
                             <input ref={urlRef} className="dashed-input-indigo" type="text" name="name" id="name" placeholder="Youtube Link" />
                         </div>
-                        <div className='inline-block' style={{width: "28%", marginLeft:"5.2%" }}>
-                            <button onClick={(e)=>{fetchSubtitle(e)}} className="dashed-button-indigo"> Fetch </button>
+                        <div className='inline-block' style={{ width: "85px", marginLeft: "20px" }}>
+                            <button onClick={(e) => { fetchSubtitle(e) }} className="dashed-button-indigo"> Fetch </button>
+                        </div>
+                        <div className='inline-block rounded-full w-11' style={{ marginLeft: "20px" }}>
+                            <button onClick={ (listening) ? SpeechRecognition.stopListening : startListening } className={`dashed-microphone-button ${listening ? 'animate-pulse' : null} `}>
+                                <MicrophoneIcon className='inline-block w-2/3 ' />
+                            </button>
                         </div>
                     </div>
                     <div className="mt-3">
