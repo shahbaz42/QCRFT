@@ -50,6 +50,65 @@
   @apply focus:ring-offset-2 focus:ring-2 focus:border-red-700 focus:ring-red-700 text-red-700 ;
 }
 
+/* dashed-rounded-microphone-button */
+.dashed-microphone-button{
+  @apply font-semibold text-gray-400 border-gray-400 border-dashed border-2 h-11 rounded-full w-full ring-black;
+}
+
+.dashed-microphone-button:hover{
+  @apply hover:border-red-700 text-red-700 ;
+}
+
+.dashed-microphone-button:focus{
+  @apply focus:ring-offset-2 focus:ring-2 focus:border-red-700 focus:ring-red-700 text-red-700 ;
+}
+
+.pulse-animate {
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    --tw-ring-offset-width: 2px;
+  }
+
+  10% {
+    --tw-ring-offset-width: 2.8px;
+  }
+
+  20% {
+    --tw-ring-offset-width: 2.8px;
+  }
+
+  30% {
+    --tw-ring-offset-width: 3.2px;
+  }
+
+  40% {
+    --tw-ring-offset-width: 3.6px;
+  }
+
+  50% {
+    --tw-ring-offset-width: 4.5px;
+  }
+  60% {
+    --tw-ring-offset-width: 3.6px;
+  }
+  70% {
+    --tw-ring-offset-width: 3.2px;
+  }
+  80% {
+    --tw-ring-offset-width: 2.8px;
+  }
+  90% {
+    --tw-ring-offset-width: 2.4px;
+  }
+  100% {
+    --tw-ring-offset-width: 2px;
+  }
+}
+
+
 /* Dashed big button */
 .dashed-big-button-indigo {
   @apply border-gray-400 text-lg font-semibold p-3 border-dashed border-2 h-14 rounded-full ring-black;
