@@ -14,6 +14,7 @@ export function AppProvider({ children }) {
     const [ subtitles, setSubtitles ] = useState("");
     const [ youtubeLink, setYoutubelink ] = useState("");
     const [ formLink, setFormLink ] = useState("");
+    const [ quizCreated, setQuizCreated ] = useState(false);
     const [ quizData, setQuizData ] = useState({
         "title": "Create a Quiz",
         "description": "Please Create a Quiz",
@@ -74,7 +75,9 @@ export function AppProvider({ children }) {
         setQuizData,
         addQuestions,
         formLink,
-        createGoogleForm
+        createGoogleForm,
+        quizCreated,
+        setQuizCreated
     }
 
     return (

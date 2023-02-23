@@ -8,6 +8,7 @@ import CreateNewQuiz from './CreateNewQuiz'
 import CreateGoogleFormButton from './CreateGoogleFormButton';
 import { useApp } from '../context/AppContext'
 import { useAuth } from '../context/AuthContext'
+import NoQuizCreatedBox from './CreateForm/NoQuizCreatedBox'
 import {
     ChartBarIcon,
     FolderIcon,
@@ -31,7 +32,7 @@ function classNames(...classes) {
 }
 
 export default function Dashboard() {
-    const { quizData, setQuizData, addQuestions } = useApp();
+    const { quizData, setQuizData, addQuestions, quizCreated } = useApp();
     const { currentUser, logout } = useAuth();
     const nodeRef = useRef(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -79,7 +80,6 @@ export default function Dashboard() {
     // }
 
     useEffect(() => {
-
     }, []);
 
 
@@ -158,19 +158,19 @@ export default function Dashboard() {
                                     </nav>
                                 </div>
                                 <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-                                        <div className="flex items-center">
-                                            <div>
-                                                <img
-                                                    className="inline-block h-10 w-10 rounded-full"
-                                                    src={currentUser.picture}
-                                                    alt=""
-                                                />
-                                            </div>
-                                            <div className="ml-3">
-                                                <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">{currentUser.name}</p>
-                                                <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700 hover:cursor hover:underline" onClick={logout}>Logout</p>
-                                            </div>
+                                    <div className="flex items-center">
+                                        <div>
+                                            <img
+                                                className="inline-block h-10 w-10 rounded-full"
+                                                src={currentUser.picture}
+                                                alt=""
+                                            />
                                         </div>
+                                        <div className="ml-3">
+                                            <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">{currentUser.name}</p>
+                                            <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700 hover:cursor hover:underline" onClick={logout}>Logout</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </Transition.Child>
@@ -239,39 +239,25 @@ export default function Dashboard() {
                     <main className="flex-1">
                         <div className="py-6">
                             <div className="max-w-2xl mx-auto px-4 sm:px-6 md:px-8">
-                                <h1 className="text-md absolute top-0 p-2 drop-shadow-md rounded-br-2xl rounded-bl-2xl bg-white font-semibold text-gray-600">{quizData.title}</h1>
-                            </div>
-                            <div className="max-w-2xl mx-auto px-4 sm:px-6 md:px-8">
                                 <Draggable nodeRef={nodeRef}>
-                                    <div ref={nodeRef} className="py-4" style={{ position: "relative", zIndex: 1 }}>
-                                        {
-                                            quizData.questions.map((question, index) => {
-                                                return (
-                                                    <CardWithHeader key={index} qn={index + 1} header={question.question} options={question.options} answer={question.answer} />
-                                                )
-                                            })
-                                        }
-                                        <DividerWithButton addQn={addQuestions} />
-                                        <CreateGoogleFormButton />
-
+                                    <div ref={nodeRef}>
+                                        <NoQuizCreatedBox />
+                                        <div ref={nodeRef} className="py-4" style={{ position: "relative", zIndex: 1 }}>
+                                            {
+                                                quizData.questions.map((question, index) => {
+                                                    return (
+                                                        <CardWithHeader key={index} qn={index + 1} header={question.question} options={question.options} answer={question.answer} />
+                                                    )
+                                                })
+                                            }
+                                            <DividerWithButton addQn={addQuestions} />
+                                            <CreateGoogleFormButton />
+                                        </div>
                                     </div>
                                 </Draggable>
                                 <div className='fixed right-0 top-0 h-screen bg-white' style={{ zIndex: 2 }}>
-
                                     <CreateNewQuizSidebar />
-                                    {/* <SplitPane
-                                        split="vertical"
-                                        minSize={"10%"}
-                                        maxSize={"50%"}
-                                        defaultSize={"50%"}
-                                        allowResize={true}
-                                    >
-                                        <div />
-                                        <CreateNewQuizSidebar />
-                                </SplitPane> */}
                                 </div>
-
-
                             </div>
                         </div>
                     </main>
