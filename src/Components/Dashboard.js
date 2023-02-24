@@ -9,6 +9,8 @@ import CreateGoogleFormButton from './CreateGoogleFormButton';
 import { useApp } from '../context/AppContext'
 import { useAuth } from '../context/AuthContext'
 import NoQuizCreatedBox from './CreateForm/NoQuizCreatedBox'
+import FormDescription from './CreateForm/FormDescription'
+import useWindowSize from '../hooks/useWindowSize'
 import {
     ChartBarIcon,
     FolderIcon,
@@ -37,6 +39,7 @@ export default function Dashboard() {
     const nodeRef = useRef(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const { width } = useWindowSize();
 
     // const [ quizData, setQuizData ] = useState({
     //     "title": "Create a Quiz",
@@ -239,22 +242,43 @@ export default function Dashboard() {
                     <main className="flex-1">
                         <div className="py-6">
                             <div className="max-w-2xl mx-auto px-4 sm:px-6 md:px-8">
-                                <Draggable nodeRef={nodeRef}>
-                                    <div ref={nodeRef}>
-                                        <NoQuizCreatedBox />
-                                        <div ref={nodeRef} className="py-4" style={{ position: "relative", zIndex: 1 }}>
-                                            {
-                                                quizData.questions.map((question, index) => {
-                                                    return (
-                                                        <CardWithHeader key={index} qn={index + 1} header={question.question} options={question.options} answer={question.answer} />
-                                                    )
-                                                })
-                                            }
-                                            <DividerWithButton addQn={addQuestions} />
-                                            <CreateGoogleFormButton />
+                                {
+                                    (width > 768) ?
+                                        <Draggable nodeRef={nodeRef}>
+                                            <div ref={nodeRef}>
+                                                {(quizCreated) ? <FormDescription /> : <NoQuizCreatedBox />}
+
+                                                <div ref={nodeRef} className="py-4" style={{ position: "relative", zIndex: 1 }}>
+                                                    {
+                                                        quizData.questions.map((question, index) => {
+                                                            return (
+                                                                <CardWithHeader key={index} qn={index + 1} header={question.question} options={question.options} answer={question.answer} />
+                                                            )
+                                                        })
+                                                    }
+                                                    <DividerWithButton addQn={addQuestions} />
+                                                    <CreateGoogleFormButton />
+                                                </div>
+                                            </div>
+                                        </Draggable>
+                                        :
+                                        <div >
+                                            {(quizCreated) ? <FormDescription /> : <NoQuizCreatedBox />}
+                                            
+                                            <div className="py-4" style={{ position: "relative", zIndex: 1 }}>
+                                                {
+                                                    quizData.questions.map((question, index) => {
+                                                        return (
+                                                            <CardWithHeader key={index} qn={index + 1} header={question.question} options={question.options} answer={question.answer} />
+                                                        )
+                                                    })
+                                                }
+                                                <DividerWithButton addQn={addQuestions} />
+                                                <CreateGoogleFormButton />
+                                            </div>
                                         </div>
-                                    </div>
-                                </Draggable>
+                                }
+
                                 <div className='fixed right-0 top-0 h-screen bg-white' style={{ zIndex: 2 }}>
                                     <CreateNewQuizSidebar />
                                 </div>

@@ -15,7 +15,7 @@ const CreateNewQuizBox = () => {
     const { width } = useWindowSize();
 
     useEffect(() => {
-        if(width < 768){
+        if(width < 1536){
             setSidebarOpen(false);
         } else {
             setSidebarOpen(true);

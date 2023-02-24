@@ -16,8 +16,8 @@ export function AppProvider({ children }) {
     const [ formLink, setFormLink ] = useState("");
     const [ quizCreated, setQuizCreated ] = useState(false);
     const [ quizData, setQuizData ] = useState({
-        "title": "Create a Quiz",
-        "description": "Please Create a Quiz",
+        "title": "",
+        "description": "",
         "questions": []
     });
 

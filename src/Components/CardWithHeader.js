@@ -22,9 +22,6 @@ export default function CardWithHeader(props) {
                     </div>
                 )
             })}
-                    
-
-          
         </div>
       </div>
     )
