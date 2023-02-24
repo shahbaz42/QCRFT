@@ -60,28 +60,6 @@ export default function Dashboard() {
     //     ]
     // });
 
-    // const addQuestions = async (num) => {
-    //     // to implement warning when subtitle is not present.
-    //     // depending on num call the api and add questions.
-    //     // generate qArr
-    //     // todo error handling
-
-    //     const URL = `${process.env.REACT_APP_SERVER_URL}/api/quiz/createQuizFromText`;
-    //     const headers = {
-    //         Authorization: `Bearer ${"token"}`
-    //     }
-    //     const data = {
-    //         text: "subtitles",
-    //         num: num
-    //     }
-    //     const result = await axios.post(URL, data, { headers });
-    //     console.log(result.data);
-    //     // push the questions to the quizData question array.
-    //     setQuizData( { ...quizData, questions: [...quizData.questions, ...result.data.questions] });
-    //     console.log({quizData});
-
-    // }
-
     useEffect(() => {
     }, []);
 
@@ -229,15 +207,16 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div className="md:pl-64 flex flex-col flex-1">
-                    <div className="sticky top-0 z-10 md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100">
-                        <button
-                            type="button"
-                            className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                            onClick={() => setSidebarOpen(true)}
-                        >
-                            <span className="sr-only">Open sidebar</span>
-                            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-                        </button>
+                    <div className="sticky top-0 z-10 md:hidden pl-1 py-0.5 sm:pl-3 sm:py-1.5 bg-gray-100">
+                            <button
+                                type="button"
+                                className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                                onClick={() => setSidebarOpen(true)}
+                            >
+                                <span className="sr-only">Open sidebar</span>
+                                <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                            </button>
+                                <h1 className='-mt-0.5 text-2xl font-bold inline-flex tracking-tight text-gray-800 sm:text-2xl' style={{ marginLeft: "calc(50vw - 102px)"}}> QuizCraft</h1>
                     </div>
                     <main className="flex-1">
                         <div className="py-6">
@@ -279,7 +258,7 @@ export default function Dashboard() {
                                         </div>
                                 }
 
-                                <div className='fixed right-0 top-0 h-screen bg-white' style={{ zIndex: 2 }}>
+                                <div className='fixed right-0 top-0 h-screen bg-white' style={{ zIndex: 22 }}>
                                     <CreateNewQuizSidebar />
                                 </div>
                             </div>
@@ -295,7 +274,7 @@ const CreateNewQuizSidebar = (props) => {
     const [expanded, setExpanded] = useState(true);
 
     return (
-        <div className="right-8 h-screen top-0 min-w-1/3" style={{ "zIndex": 2 }} >
+        <div className="right-8 h-screen top-0 min-w-1/3" style={{ "zIndex": 22 }} >
             <div>
 
             </div>
