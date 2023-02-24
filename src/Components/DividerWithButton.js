@@ -11,7 +11,7 @@ export default function DividerWithButton(props) {
                 <button
                     onClick={() => { props.addQn(1)}}
                     type="button"
-                    className="inline-flex items-center shadow-sm px-4 py-1.5 mx-2 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="inline-flex items-center shadow-sm px-4 py-1.5 mx-2 border border-gray-300 text-sm leading-5 font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                     <PlusSmallIcon className="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
                     <span>1 Qn</span>
@@ -19,7 +19,7 @@ export default function DividerWithButton(props) {
                 <button
                     onClick={() => { props.addQn(2)}}
                     type="button"
-                    className="inline-flex items-center shadow-sm px-4 py-1.5 mx-2 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="inline-flex items-center shadow-sm px-4 py-1.5 mx-2 border border-gray-300 text-sm leading-5 font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                     <PlusSmallIcon className="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
                     <span>2 Qns</span>
@@ -27,7 +27,7 @@ export default function DividerWithButton(props) {
                 <button
                     onClick={() => { props.addQn(3)}}
                     type="button"
-                    className="inline-flex items-center shadow-sm px-4 py-1.5 mx-2 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="inline-flex items-center shadow-sm px-4 py-1.5 mx-2 border border-gray-300 text-sm leading-5 font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                     <PlusSmallIcon className="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
                     <span>5 Qns</span>

@@ -69,18 +69,18 @@ const CreateNewQuizBox = () => {
             <div className="right-sidebar bg-white h-screen relative drop-shadow-xl hover:drop-shadow-2xl" style={{width:`${sidebarOpen ?'540px':'0'}`, transition:"width 0.4s" }}>
                 <div className='relative inline-block rotate-90' style={{ right: "68px", top: "100px" }}>
                     <div 
-                        className='bg-white rounded-br-xl rounded-bl-xl p-2 text-lg text-center font-medium text-gray-600 drop-shadow-md hover:drop-shadow-xl hover:cursor-pointer'
+                        className='bg-white p-2 text-lg text-center font-medium text-gray-600 drop-shadow-md hover:drop-shadow-xl hover:cursor-pointer'
                         style={{width : "100px", height: "46px"}}
                         onClick={() => { setSidebarOpen(!sidebarOpen) }}
                     >
                         Reference
                     </div>
                 </div>
-                <div className='relative bg-white block w-full  border-gray-300 border-dashed rounded-lg p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
+                <div className='relative bg-white block w-full  border-gray-300 border-dashed p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
                     <div>
                         <div className="mt-1">
                             <div className='inline-block' style={{ width: "calc(100% - 85px - 45px - 40px )" }}>
-                                <input ref={urlRef} className="dashed-input-indigo" type="text" name="name" id="name" placeholder="Youtube Link" />
+                                <input ref={urlRef} className="dashed-input-black" type="text" name="name" id="name" placeholder="Youtube Link" />
                             </div>
                             <div className='inline-block' style={{ width: "85px", marginLeft: "20px" }}>
                                 <button onClick={(e) => { fetchSubtitle(e); setLoading(true) }} className={`dashed-button-indigo dashed-microphone-button ${loading ? 'animate-pulse' : null}`}> {`${loading ? 'Fetching' : 'Fetch'}`} </button>
@@ -92,7 +92,7 @@ const CreateNewQuizBox = () => {
                             </div>
                         </div>
                         <div className="mt-3">
-                            <textarea className="dashed-textarea-indigo hideScroll" value={subtitles} onChange={textAreaHandler} style={{ height: "38vh" }} />
+                            <textarea className="dashed-textarea-black hideScroll" value={subtitles} onChange={textAreaHandler} style={{ height: "38vh" }} />
                         </div>
                     </div>
                 </div>
