@@ -110,8 +110,8 @@ const createGoogleFormFromQuizJSONController = async (req, res) => {
     try {
         const { quizJSON } = req.body;
         const form = await createNewForm({
-            title: "Sample Form",
-            document_title: undefined,
+            title: quizJSON.title,
+            document_title: quizJSON.title,
             tokens: req.user.tokens,
         });
         console.log("form created");

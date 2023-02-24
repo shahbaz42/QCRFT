@@ -33,6 +33,5 @@ const quizSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model('User', quizSchema );
-
-export default User;
+const Quiz = mongoose.model('Quiz', quizSchema );
+export default Quiz;
