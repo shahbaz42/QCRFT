@@ -2,9 +2,9 @@
 import { Fragment, useEffect, useState, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Draggable from 'react-draggable'
-import CardWithHeader from './CardWithHeader'
+import MCQ from './Questions/MCQ'
 import DividerWithButton from './DividerWithButton'
-import CreateNewQuiz from './CreateNewQuiz'
+import RightSidebar from './RightSidebar'
 import CreateGoogleFormButton from './CreateGoogleFormButton';
 import { useApp } from '../context/AppContext'
 import { useAuth } from '../context/AuthContext'
@@ -231,7 +231,7 @@ export default function Dashboard() {
                                                     {
                                                         quizData.questions.map((question, index) => {
                                                             return (
-                                                                <CardWithHeader key={index} qn={index + 1} header={question.question} options={question.options} answer={question.answer} />
+                                                                <MCQ key={index} qn={index + 1} header={question.question} options={question.options} answer={question.answer} />
                                                             )
                                                         })
                                                     }
@@ -248,7 +248,7 @@ export default function Dashboard() {
                                                 {
                                                     quizData.questions.map((question, index) => {
                                                         return (
-                                                            <CardWithHeader key={index} qn={index + 1} header={question.question} options={question.options} answer={question.answer} />
+                                                            <MCQ key={index} qn={index + 1} header={question.question} options={question.options} answer={question.answer} />
                                                         )
                                                     })
                                                 }
@@ -259,7 +259,7 @@ export default function Dashboard() {
                                 }
 
                                 <div className='fixed right-0 top-0 h-screen bg-white' style={{ zIndex: 22 }}>
-                                    <CreateNewQuizSidebar />
+                                    <RightSidebarWrapper />
                                 </div>
                             </div>
                         </div>
@@ -270,7 +270,7 @@ export default function Dashboard() {
     )
 }
 
-const CreateNewQuizSidebar = (props) => {
+const RightSidebarWrapper = (props) => {
     const [expanded, setExpanded] = useState(true);
 
     return (
@@ -278,7 +278,7 @@ const CreateNewQuizSidebar = (props) => {
             <div>
 
             </div>
-            <CreateNewQuiz />
+            <RightSidebar />
         </div>
     )
 }

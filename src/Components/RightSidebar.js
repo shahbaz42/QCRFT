@@ -6,7 +6,7 @@ import { MicrophoneIcon } from '@heroicons/react/24/outline'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import useWindowSize from '../hooks/useWindowSize';
 
-const CreateNewQuizBox = () => {
+const SetReferenceSidebar = () => {
     const urlRef = useRef(null);
     const { token } = useAuth();
     const { subtitles, setSubtitles } = useApp();
@@ -102,12 +102,12 @@ const CreateNewQuizBox = () => {
     )
 }
 
-export default function CreateNewQuiz() {
+export default function RightSidebar() {
     const {quizCreated} = useApp();
     return (
         <>
             {quizCreated &&
-                <CreateNewQuizBox />
+                <SetReferenceSidebar />
             }
         </>
     )

@@ -1,4 +1,4 @@
-export default function CardWithHeader(props) {
+export default function MCQ(props) {
     return (
       <div className="bg-white overflow-hidden drop-shadow-md divide-y my-3 divide-gray-200">
         <div className="px-4 py-5 sm:p-6">

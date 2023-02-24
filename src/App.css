@@ -257,6 +257,11 @@
   @apply focus:border-black focus:outline-none focus:border-solid;
 }
 
+/* dropdown */
+.dropdown-animate{
+  transition: width 2s, height 4s;
+}
+
 /* for hiding scrollbar */
 .hideScroll::-webkit-scrollbar {
   width: 1em;
