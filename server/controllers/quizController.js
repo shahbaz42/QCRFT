@@ -84,11 +84,27 @@ const createQuizController = async (req, res) => {
 
 const createQuizFromTextController = async (req, res) => {
     try {
-        const { text, num } = req.body;
+        const { 
+            text,
+            num,
+            difficulty,
+            options,
+            creativityLevel,
+            length,
+            tone,
+        } = req.body;
+
+        console.log(req.body)
+        
 
         const quizJSON = await generateQuizJSON({
             text,
             noOfQuestions : Number(num),
+            difficulty,
+            options,
+            creativityLevel,
+            length,
+            tone,
         });
         console.log("quizJSON created");
         res.status(200).json({

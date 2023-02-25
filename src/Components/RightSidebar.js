@@ -46,17 +46,22 @@ const SetReferenceSidebar = () => {
     }, [transcript])
 
     const fetchSubtitle = async () => {
-        console.log("fetching subtitle");
-        const url = urlRef.current.value;
-        const params = {
-            url: url
+        try {
+            const url = urlRef.current.value;
+            const params = {
+                url: url
+            }
+            const headers = {
+                Authorization: `Bearer ${token}`
+            }
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/quiz/getSubtitle`, { params, headers });
+            setSubtitles(response.data.subtitles);
+            setLoading(false);
+        } catch(err) {
+            alert('Error fetching subtitles, check if the video has subtitles.')
+            setLoading(false);
         }
-        const headers = {
-            Authorization: `Bearer ${token}`
-        }
-        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/quiz/getSubtitle`, { params, headers });
-        setSubtitles(response.data.subtitles);
-        setLoading(false);
+        
     }
 
     return (
@@ -105,31 +110,31 @@ const SetReferenceSidebar = () => {
 }
 
 export function ParametersPane() {
-    const { 
+    const {
         setDifficulty,
         setOptions,
         setCreativityLevel,
         setLength,
-        setTone 
+        setTone
     } = useApp();
 
     return (
         <>
             <div className='mt-1 grid grid-cols-2 gap-4'>
                 <div className='mt-1'>
-                    <Dropdown onChange={(e) => {setDifficulty(e.target.value)}} label="Difficulty " menu={[{ name: "Easy", value: "easy" }, { name: "Medium", value: "medium" }, { name: "Hard", value: "hard" }]} />
+                    <Dropdown onChange={(e) => { setDifficulty(e.target.value) }} label="Difficulty " menu={[{ name: "Easy", value: "easy" }, { name: "Medium", value: "medium" }, { name: "Hard", value: "hard" }]} />
                 </div>
                 <div className='mt-1'>
-                    <Dropdown onChange={(e) => {setOptions(e.target.value)}} label="Options " menu={[{ name: "Four", value: "four" }, {name : "Two", value: "two"}, { name: "Three", value: "three" }, { name: "Five", value: "five" }]} />
+                    <Dropdown onChange={(e) => { setOptions(e.target.value) }} label="Options " menu={[{ name: "Four", value: "four" }, { name: "Two", value: "two" }, { name: "Three", value: "three" }, { name: "Five", value: "five" }]} />
                 </div>
                 <div className='mt-1'>
-                    <Dropdown onChange={(e) => {setCreativityLevel(e.target.value)}} label="Creavity Level" menu={[{ name: "Optimal", value: "optimal" }, { name: "None", value: "None" }, { name: "Little Creative", value: "little creative" }, { name: "Creative", value: "creative" }, { name: "Highly creative", value: "highly creative" }]} />
+                    <Dropdown onChange={(e) => { setCreativityLevel(e.target.value) }} label="Creavity Level" menu={[{ name: "Optimal", value: "optimal" }, { name: "None", value: "None" }, { name: "Little Creative", value: "little creative" }, { name: "Creative", value: "creative" }, { name: "Highly creative", value: "highly creative" }]} />
                 </div>
                 <div className='mt-1'>
-                    <Dropdown onChange={(e) => {setLength(e.target.value)}} label="Length" menu={[{ name: "Short", value: "short" }, { name: "Long", value: "long" }]} />
+                    <Dropdown onChange={(e) => { setLength(e.target.value) }} label="Length" menu={[{ name: "Short", value: "short" }, { name: "Long", value: "long" }]} />
                 </div>
                 <div className='mt-1'>
-                    <Dropdown onChange={(e) => {setTone(e.target.value)}} label="Tone" menu={[{ name: "Formal", value: "formal" }, { name: "Casual", value: "Casual" }]} />
+                    <Dropdown onChange={(e) => { setTone(e.target.value) }} label="Tone" menu={[{ name: "Formal", value: "formal" }, { name: "Casual", value: "Casual" }]} />
                 </div>
             </div>
         </>
