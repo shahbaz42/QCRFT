@@ -80,7 +80,7 @@ export function AppProvider({ children }) {
             setFormLink(result.data.formLink);
         } catch(err) {
             setFormLink("");
-            alert("Some error occured in creating the form. Please try again later.")
+            alert("Some error occured. Please fill the Name and the Description of the Quiz.")
         }
     }
 
