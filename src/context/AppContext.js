@@ -15,6 +15,12 @@ export function AppProvider({ children }) {
     const [ youtubeLink, setYoutubelink ] = useState("");
     const [ formLink, setFormLink ] = useState("");
     const [ quizCreated, setQuizCreated ] = useState(false);
+    const [ difficulty, setDifficulty ] = useState("Easy");
+    const [ options, setOptions ] = useState("Four");
+    const [ creativityLevel, setCreativityLevel ] = useState("Optimal");
+    const [ length, setLength ] = useState("Short");
+    const [ tone, setTone ] = useState("Formal");
+
     const [ quizData, setQuizData ] = useState({
         "title": "",
         "description": "",
@@ -77,7 +83,17 @@ export function AppProvider({ children }) {
         formLink,
         createGoogleForm,
         quizCreated,
-        setQuizCreated
+        setQuizCreated,
+        difficulty,
+        setDifficulty,
+        options,
+        setOptions,
+        creativityLevel,
+        setCreativityLevel,
+        length,
+        setLength,
+        tone,
+        setTone
     }
 
     return (
