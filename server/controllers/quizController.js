@@ -27,7 +27,11 @@ const getSubtitleController = async (req, res) => {
 const createQuizController = async (req, res) => {
     try {
         const { url, num } = req.body;
-        const youtube_video_id = url.split("v=")[1];
+        // youtube url can be of two type one youtube.con and other youtu.be
+        // so we need to check which one it is and then extract the video id
+        const rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+        const youtube_video_id = url.match(rx)[1];
+
         const subtitles = await getSubtitles(youtube_video_id, {
             timestamps: false,
             removeFormatting: true,

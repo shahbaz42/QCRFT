@@ -23,10 +23,10 @@ import {
 
 const navigation = [
     { name: 'New Quiz', href: '#', icon: DocumentPlusIcon, current: true },
-    { name: 'Setting', href: '#', icon: AdjustmentsHorizontalIcon, current: false },
-    { name: 'Forms', href: '#', icon: FolderIcon, current: false },
-    { name: 'Resources', href: '#', icon: InboxIcon, current: false },
-    { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
+    // { name: 'Setting', href: '#', icon: AdjustmentsHorizontalIcon, current: false },
+    // { name: 'Forms', href: '#', icon: FolderIcon, current: false },
+    // { name: 'Resources', href: '#', icon: InboxIcon, current: false },
+    // { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
 ]
 
 function classNames(...classes) {
