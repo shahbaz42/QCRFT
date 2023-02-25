@@ -41,25 +41,6 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(false);
     const { width } = useWindowSize();
 
-    // const [ quizData, setQuizData ] = useState({
-    //     "title": "Create a Quiz",
-    //     "description": "Please Create a Quiz",
-    //     "questions": [
-    //         // {
-    //         //     "question": "What is the name of OpenAI's language model?",
-    //         //     "type": "RADIO",
-    //         //     "options": ["Bert", "ChatGPT", "GPT-1", "GPT-3"],
-    //         //     "answer": 1
-    //         // },
-    //         // {
-    //         //     "question": "Which company recently invested 10 billion dollars in OpenAI?",
-    //         //     "type": "RADIO",
-    //         //     "options": ["Google", "Microsoft", "Amazon", "Apple"],
-    //         //     "answer": 1
-    //         // }
-    //     ]
-    // });
-
     useEffect(() => {
     }, []);
 
@@ -253,7 +234,7 @@ export default function Dashboard() {
                                                         )
                                                     })
                                                 }
-                                                
+                                                {(quizCreated) && <DividerWithButton addQn={addQuestions} />}
                                                 <CreateGoogleFormButton />
                                             </div>
                                         </div>
