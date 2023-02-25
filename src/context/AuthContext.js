@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
         /* global google */
         const client = google.accounts.oauth2.initCodeClient({
             client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-            scope: 'https://www.googleapis.com/auth/drive',
+            scope: 'https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
             ux_mode: 'popup',
             callback: (response) => {
                 const { code } = response;
