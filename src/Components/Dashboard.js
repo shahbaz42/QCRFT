@@ -235,7 +235,8 @@ export default function Dashboard() {
                                                             )
                                                         })
                                                     }
-                                                    <DividerWithButton addQn={addQuestions} />
+
+                                                    {(quizCreated) && <DividerWithButton addQn={addQuestions} />}
                                                     <CreateGoogleFormButton />
                                                 </div>
                                             </div>
@@ -252,7 +253,7 @@ export default function Dashboard() {
                                                         )
                                                     })
                                                 }
-                                                <DividerWithButton addQn={addQuestions} />
+                                                
                                                 <CreateGoogleFormButton />
                                             </div>
                                         </div>

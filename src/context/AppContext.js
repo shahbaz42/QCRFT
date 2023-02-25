@@ -15,6 +15,7 @@ export function AppProvider({ children }) {
     const [ youtubeLink, setYoutubelink ] = useState("");
     const [ formLink, setFormLink ] = useState("");
     const [ quizCreated, setQuizCreated ] = useState(false);
+    const [ fetchingQuestion, setFetchingQuestion ] = useState(false);
     const [ difficulty, setDifficulty ] = useState("Easy");
     const [ options, setOptions ] = useState("Four");
     const [ creativityLevel, setCreativityLevel ] = useState("Optimal");
@@ -34,6 +35,7 @@ export function AppProvider({ children }) {
         // generate qArr
         // todo error handling
 
+        setFetchingQuestion(true);
         const URL = `${process.env.REACT_APP_SERVER_URL}/api/quiz/createQuizJSONFromText`;
         const headers = {
             Authorization: `Bearer ${token}`
@@ -47,7 +49,7 @@ export function AppProvider({ children }) {
         // push the questions to the quizData question array.
         setQuizData( { ...quizData, questions: [...quizData.questions, ...result.data.quizJSON.questions] });
         console.log({quizData});
-    
+        setFetchingQuestion(false);
     }
 
     const createGoogleForm = async () => {
@@ -84,6 +86,8 @@ export function AppProvider({ children }) {
         createGoogleForm,
         quizCreated,
         setQuizCreated,
+        fetchingQuestion, 
+        setFetchingQuestion,
         difficulty,
         setDifficulty,
         options,
