@@ -5,7 +5,10 @@ import { createNewForm, updateDescription, addQuestions, setQuiz  } from "../uti
 const getSubtitleController = async (req, res) => {
     try {
         const { url } = req.query;
-        const youtube_video_id = url.split("v=")[1];
+        // const youtube_video_id = url.split("v=")[1];
+        const re = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/
+        const youtube_video_id = url.match(re)[1];
+
         const subtitles = await getSubtitles(youtube_video_id, {
             timestamps: false,
             removeFormatting: true,
