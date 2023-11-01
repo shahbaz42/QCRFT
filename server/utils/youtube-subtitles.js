@@ -25,6 +25,7 @@ const getSubtitles = async(videoID, {
                 resolve(captionsText);
             }
         } catch (error) {
+            console.log(error);
             reject(error);
         }
     });

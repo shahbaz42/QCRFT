@@ -1,10 +1,16 @@
 import { ChatGPTAPI } from 'chatgpt'
+import { OpenAIClient, AzureKeyCredential } from "@azure/openai";
 import dotenv from 'dotenv'
 dotenv.config()
 
 const api = new ChatGPTAPI({
     apiKey: process.env.OPENAPI_KEY,
 })
+
+const client = new OpenAIClient(
+    "https://realassist.openai.azure.com/",
+    new AzureKeyCredential(process.env.OPENAPI_KEY)
+);
 
 const getResponse = async (qn) => {
     return new Promise(async (resolve, reject) => {
@@ -61,8 +67,49 @@ const generateQuizJSON = async ({
             ${text}
             </text>
             `
-            const res = await getResponse(template);
-            const quizJSON = JSON.parse(res);
+            // const res = await getResponse(template);
+
+            const messages = [
+                { role: "system", content: "You are a Quiz JSON creator bot, You output only JSON nothing else. You take raw text content and generate quiz JSON with specified format" },
+                { role: "user", content: "Can you help me create a quiz JSON as given descriptions?" },
+                { role: "assistant", content: "Yes" },
+                {
+                    role: "user", content: `Please make sure to check the following:
+                1. question can only be a string
+                2. type can only be "RADIO"
+                3. options can only be an array of strings of size ${options} i.e. ${options} options for each question.
+                4. answer is the index of the correct answer
+                5. output only the JSON document nothing else.
+                6. The questions should be of ${difficulty} difficulty.
+                7. creativityLevel should be ${creativityLevel}.
+                8. The questions should be ${length}.
+                9. The tone of the questions should be ${tone}.`
+                },
+                { role: "assistant", content: "Yes" },
+                { role: "user", content: `Here is the format of the json {
+                    "title" : "Title of the quiz",
+                    "description" : "Description of the quiz",
+                    "questions" :[
+                        {
+                            "question" : "Question text.",
+                            "type" : "RADIO",
+                            "options" : [ ],
+                            "answer" : 0
+                        },
+                    ]
+                }` },
+                { role: "assistant", content: "Yes, I'll make sure to generate only in the given format." },
+                { role: "user", content: `Please generate a JSON document consisting of ${noOfQuestions} questions with "${options} options" each.` },
+                { role: "assistant", content: "Okay, Please provide me text I'll provide you JSON" },
+                { role: "user", content: "Your output will be parsed by a JSON parser if parsing fails you will die." },
+                { role: "user", content: `OK Good, Remember your response should start with "{"" and end with "}" Dont't say anything else. Here's your text` },
+                { role: "user", content: text },
+            ];
+
+            const result = await client.getChatCompletions("modalChatbot", messages, { maxTokens: 6000 });
+
+            console.log(result.choices[0].message.content)
+            const quizJSON = JSON.parse(result.choices[0].message.content);
             resolve(quizJSON);
         } catch (err) {
             reject(err);
